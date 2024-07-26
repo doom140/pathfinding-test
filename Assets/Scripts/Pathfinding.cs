@@ -5,7 +5,7 @@ using Unity.VisualScripting.FullSerializer;
 using UnityEditor;
 using UnityEngine;
 
-public class Pathfinding 
+public class Pathfinding
 {
     private ObstacleData obstacleData;
     private Node[,] nodeArray;
@@ -96,7 +96,7 @@ public class Pathfinding
         return null; // path not found
     }
 
-    private int GetDistance(Node nodeA, Node nodeB)
+    public static int GetDistance(Node nodeA, Node nodeB)
     {
         int distanceX = Mathf.Abs(nodeA.Position.x - nodeB.Position.x);
         int distanceY = Mathf.Abs(nodeA.Position.y - nodeB.Position.y);
@@ -112,6 +112,15 @@ public class Pathfinding
         else
         {
             return distanceX * diagonalStep + ((distanceY - distanceX) * lateralStep);
+        }
+    }
+    
+    public static void ClearTiles()
+    {
+        Node[,] nodeArray = GameManager.Instance.nodeArray;
+        foreach (Node node in nodeArray)
+        {
+            node.NodeTile.GetComponent<TileData>().SetInsideColor(Color.white);
         }
     }
 
@@ -156,3 +165,5 @@ public class Pathfinding
         return path;
     }
 }
+
+
